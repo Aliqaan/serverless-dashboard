@@ -25,6 +25,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AdminNavbar from "components/Navbar/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
+import FunctionInfoCard from "components/Function/FunctionInfoCard.js";
 
 import routes from "routes.js";
 import { serverInfo } from 'constants/servers.js'
@@ -37,9 +38,8 @@ var ps;
 function Server(props) {
   const { id } = useParams()
   const server = serverInfo[id-1]
-  console.log(server)
   const [functions, setFunctions] = useState([])
-
+  const [selectedFunction, setSelectedFunction] = useState(null)
 
   const location = useLocation();
   const mainPanelRef = useRef(null);
@@ -85,7 +85,11 @@ function Server(props) {
         setFunctions(res)
     })
   }, [])
-  console.log(functions)
+  console.log(selectedFunction);
+
+  const handleFunctionChange = (func) => {
+    setSelectedFunction(func)
+  };
 
   return (
     <BackgroundColorContext.Consumer>
@@ -98,9 +102,18 @@ function Server(props) {
                 text: "Functions",
                 imgSrc: logo
               }}
+              onFunctionChange = {handleFunctionChange}
             />
-            <div className="main-panel" ref={mainPanelRef} data={color}>
-                <AdminNavbar/>
+            <div className="main-panel-function" ref={mainPanelRef} data={color}>
+                {selectedFunction ? 
+                <FunctionInfoCard 
+                name = {selectedFunction.name}
+                ip_address = {server.ip_address}
+                replicas = {selectedFunction.replicas}
+                invocationCount = {selectedFunction.invocationCount}
+                /> 
+                : null
+                }
               {
                 // we don't want the Footer to be rendered on map page
                 location.pathname === "/admin/maps" ? null : <Footer fluid />

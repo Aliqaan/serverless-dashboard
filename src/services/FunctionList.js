@@ -6,7 +6,6 @@ async function getFunctions(url, username, password) {
             'Authorization': 'Basic ' + btoa(username + ':' + password) 
          },
     }
-    console.log(btoa(username + ':' + password))
     const response = await fetch('https://cors-anywhere.herokuapp.com/http://' + url + ":8080/system/functions", requestOptions)
     console.log(response)
     const resMessage = await response.json()

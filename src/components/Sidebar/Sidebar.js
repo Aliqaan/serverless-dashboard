@@ -59,61 +59,29 @@ function Sidebar(props) {
     setSelectedFunction(func)
     setShowMonitoring(false)
     setShowDeploy(false)
+    console.log(props)
+    onFunctionChange(func)
   };
   const handleMonitorClick = () => {
     setSelectedFunction({})
     setShowMonitoring(true)
     setShowDeploy(false)
+    onFunctionChange(null)
   };
   const handleDeployClick = () => {
     setSelectedFunction([])
     setShowMonitoring(false)
     setShowDeploy(true)
+    onFunctionChange(null)
   };
 
-  const { functions, logo, routes } = props;
-  let logoImg = null;
-  let logoText = null;
-  if (logo !== undefined) {
-    if (logo.outterLink !== undefined) {
-      logoImg = (
-        <a
-          href={logo.outterLink}
-          className="simple-text logo-mini"
-          target="_blank"
-          onClick={props.toggleSidebar}
-        >
-          <div className="logo-img">
-            <img src={logo.imgSrc} alt="react-logo" />
-          </div>
-        </a>
-      );
-      logoText = (
-        <a className="simple-text logo-normal" >
-          {logo.text}
-        </a>
-      );
-    } else {
-      logoImg = (
-        <Link
-          to={logo.innerLink}
-          className="simple-text logo-mini"
-          onClick={props.toggleSidebar}
-        >
-          <div className="logo-img">
-            <img src={logo.imgSrc} alt="react-logo" />
-          </div>
-        </Link>
-      );
-      logoText = (
-        <p
-          className="simple-text logo-normal"
-        >
-          {logo.text}
-        </p>
-      );
-    }
-  }
+  const { functions, logo, onFunctionChange} = props;
+  let logoText = (
+    <a className="simple-text logo-normal" >
+      {logo.text}
+    </a>
+  );
+  
   return (
     <BackgroundColorContext.Consumer>
       {({ color }) => (
@@ -124,7 +92,7 @@ function Sidebar(props) {
               </div>
             <Nav>
               {functions.map((func) => {
-                console.log(func)
+                // console.log(func)
                 return (
                     <div
                       className="rounded-nav"
