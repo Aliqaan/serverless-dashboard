@@ -26,8 +26,8 @@ import AdminNavbar from "components/Navbar/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FunctionInfoCard from "components/Function/FunctionInfoCard.js";
+import FunctionInvoke from "../components/Function/FunctionInvoke";
 
-import routes from "routes.js";
 import { serverInfo } from 'constants/servers.js'
 import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
@@ -104,16 +104,21 @@ function Server(props) {
               }}
               onFunctionChange = {handleFunctionChange}
             />
-            <div className="main-panel-function" ref={mainPanelRef} data={color}>
+            <div className="main-panel" ref={mainPanelRef} data={color}>
+                <AdminNavbar/>
                 {selectedFunction ? 
+                <div className="main-panel-function">
                 <FunctionInfoCard 
                 name = {selectedFunction.name}
                 ip_address = {server.ip_address}
                 replicas = {selectedFunction.replicas}
                 invocationCount = {selectedFunction.invocationCount}
                 /> 
+                <FunctionInvoke></FunctionInvoke>
+                </div>
                 : null
                 }
+                
               {
                 // we don't want the Footer to be rendered on map page
                 location.pathname === "/admin/maps" ? null : <Footer fluid />
