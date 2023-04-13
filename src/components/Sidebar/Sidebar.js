@@ -37,7 +37,8 @@ function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
   const [selectedFunction, setSelectedFunction] = React.useState({})
-
+  const [showMonitoring, setShowMonitoring] = React.useState(false)
+  const [showDeploy, setShowDeploy] = React.useState(false)
 
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -54,12 +55,21 @@ function Sidebar(props) {
     };
   });
   
-  const handleClick = (func) => {
-    setSelectedFunction(func);
+  const handleFunctionClick = (func) => {
+    setSelectedFunction(func)
+    setShowMonitoring(false)
+    setShowDeploy(false)
   };
-
-
-
+  const handleMonitorClick = () => {
+    setSelectedFunction({})
+    setShowMonitoring(true)
+    setShowDeploy(false)
+  };
+  const handleDeployClick = () => {
+    setSelectedFunction([])
+    setShowMonitoring(false)
+    setShowDeploy(true)
+  };
 
   const { functions, logo, routes } = props;
   let logoImg = null;
@@ -118,8 +128,8 @@ function Sidebar(props) {
                 return (
                     <div
                       className="rounded-nav"
-                      style={{margin: '10px 15px 0', border: selectedFunction.name === func.name ? '2px solid #f3caf0' : ''}}
-                      onClick= {() => {handleClick(func)}}
+                      style={{margin: '10px 15px 0', border: selectedFunction.name === func.name ? '2px solid #f3caf0' : '', cursor:'pointer'}}
+                      onClick= {() => {handleFunctionClick(func)}}
                     >
                       <i className="tim-icons icon-spaceship" />
                       <p>{func.name}</p>
@@ -127,10 +137,24 @@ function Sidebar(props) {
                 );
               })}
               <li className="active-pro">
-                <ReactstrapNavLink href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro">
-                  <i className="tim-icons icon-upload" />
-                  <p>Deploy</p>
-                </ReactstrapNavLink>
+                <div 
+                className="rounded-nav" 
+                style={{margin: '10px 15px 55px' ,border: showMonitoring ? '2px solid #f3caf0' : '', cursor:'pointer'}}
+                onClick= {handleMonitorClick}
+                >
+                    <i className="tim-icons icon-chart-bar-32" />
+                    <p>Monitor</p>
+                </div>
+              </li>
+              <li className="active-pro">
+                 <div
+                  className="rounded-nav"
+                  style={{margin: '10px 15px 0px', border: showDeploy ? '2px solid #f3caf0' : '', cursor:'pointer'}}
+                  onClick = {handleDeployClick}
+                  >
+                      <i className="tim-icons icon-upload" />
+                      <p>Deploy</p>
+                    </div>
               </li>
             </Nav>
           </div>
