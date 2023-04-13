@@ -5,7 +5,7 @@ const serverInfo = [
         "architecture": "Arm",
         "state":"Running",
         "username":'admin',
-        'password':'bura password koy',
+        'password':'UqwjGj3B3Ew3V5QBGPSXRReZxGmGBtzk1CqdwXCvEzVkC18s6XruUqrl5v4ryGP',
         'type': 'Edge'
     },
     {
@@ -14,7 +14,7 @@ const serverInfo = [
         "architecture": "Amd",
         "state":"Running",
         "username":'admin',
-        'password':'bura password koy',
+        'password':'vIhxExx3LwmNaX7DxFOFf6lgyrS3mbXbQ0W3TotqdhgTYskzK71h6ZrNY6dIGLc',
         'type': 'Cloud'
     },
 ]

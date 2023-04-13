@@ -19,7 +19,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import AdminLayout from "layouts/Admin.js";
+import DashboardLayout from "layouts/Admin.js";
 import ServerLayout from "layouts/Server.js";
 
 import "assets/scss/black-dashboard-react.scss";
@@ -37,8 +37,8 @@ root.render(
     <BackgroundColorWrapper>
       <BrowserRouter>
         <Switch>
-          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-          <Route path="/server" component= {ServerLayout} />
+          <Route path="/admin" render={(props) => <DashboardLayout {...props} />} />
+          <Route path="/server/:id" component= {ServerLayout} />
           <Redirect from="/" to="/admin/dashboard" />
         </Switch>
       </BrowserRouter>

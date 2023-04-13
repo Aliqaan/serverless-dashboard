@@ -36,10 +36,9 @@ var ps;
 function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
-  // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    return location.pathname === routeName ? "active" : "";
-  };
+  const [selectedFunction, setSelectedFunction] = React.useState({})
+
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(sidebarRef.current, {
@@ -54,10 +53,15 @@ function Sidebar(props) {
       }
     };
   });
-  const linkOnClick = () => {
-    document.documentElement.classList.remove("nav-open");
+  
+  const handleClick = (func) => {
+    setSelectedFunction(func);
   };
-  const { routes, rtlActive, logo } = props;
+
+
+
+
+  const { functions, logo, routes } = props;
   let logoImg = null;
   let logoText = null;
   if (logo !== undefined) {
@@ -75,12 +79,7 @@ function Sidebar(props) {
         </a>
       );
       logoText = (
-        <a
-          href={logo.outterLink}
-          className="simple-text logo-normal"
-          target="_blank"
-          onClick={props.toggleSidebar}
-        >
+        <a className="simple-text logo-normal" >
           {logo.text}
         </a>
       );
@@ -97,13 +96,11 @@ function Sidebar(props) {
         </Link>
       );
       logoText = (
-        <Link
-          to={logo.innerLink}
+        <p
           className="simple-text logo-normal"
-          onClick={props.toggleSidebar}
         >
           {logo.text}
-        </Link>
+        </p>
       );
     }
   }
@@ -112,38 +109,27 @@ function Sidebar(props) {
       {({ color }) => (
         <div className="sidebar" data={color}>
           <div className="sidebar-wrapper" ref={sidebarRef}>
-            {logoImg !== null || logoText !== null ? (
-              <div className="logo">
-                {logoImg}
+              <div className="logo" style={{textAlign:'center'}}>
                 {logoText}
               </div>
-            ) : null}
             <Nav>
-              {routes.map((prop, key) => {
-                if (prop.redirect) return null;
+              {functions.map((func) => {
+                console.log(func)
                 return (
-                  <li
-                    className={
-                      activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
-                    }
-                    key={key}
-                  >
-                    <NavLink
-                      to={prop.layout + prop.path}
-                      className="nav-link"
-                      activeClassName="active"
-                      onClick={props.toggleSidebar}
+                    <div
+                      className="rounded-nav"
+                      style={{margin: '10px 15px 0', border: selectedFunction.name === func.name ? '2px solid #f3caf0' : ''}}
+                      onClick= {() => {handleClick(func)}}
                     >
-                      <i className={prop.icon} />
-                      <p>{rtlActive ? prop.rtlName : prop.name}</p>
-                    </NavLink>
-                  </li>
+                      <i className="tim-icons icon-spaceship" />
+                      <p>{func.name}</p>
+                    </div>
                 );
               })}
               <li className="active-pro">
                 <ReactstrapNavLink href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro">
-                  <i className="tim-icons icon-spaceship" />
-                  <p>Upgrade to PRO</p>
+                  <i className="tim-icons icon-upload" />
+                  <p>Deploy</p>
                 </ReactstrapNavLink>
               </li>
             </Nav>

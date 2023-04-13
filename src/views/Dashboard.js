@@ -20,6 +20,7 @@ import React from "react";
 import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
+import { useHistory } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -53,10 +54,17 @@ import {
 import { serverInfo } from 'constants/servers.js'
 
 function Dashboard(props) {
+  const history = useHistory();
   const [bigChartData, setbigChartData] = React.useState("data1");
   const setBgChartData = (name) => {
     setbigChartData(name);
   };
+
+  const handleServerClick = (id) => {
+    // Redirect to the related server
+    history.push(`/server/${id}`);
+  };
+
   return (
     <>
       <div className="content">
@@ -68,7 +76,7 @@ function Dashboard(props) {
         <Row>
             {serverInfo.map(server => (
               <Col lg="6">
-                <Card className="card-chart">
+                <Card className="card-chart" style={{cursor:"pointer"}} onClick = {() => {handleServerClick(server.id)}}>
                   <CardHeader>
                     <CardTitle style={{textAlign:'center'}} tag="h3">
                       Server {server.id}

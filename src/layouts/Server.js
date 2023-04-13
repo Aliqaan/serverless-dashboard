@@ -16,7 +16,8 @@
 
 */
 import React from "react";
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Route, Switch, Redirect, useLocation, useParams } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
@@ -26,19 +27,24 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
-
+import { serverInfo } from 'constants/servers.js'
 import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
+import getFunctions from "../services/FunctionList";
 
 var ps;
 
-function Admin(props) {
+function Server(props) {
+  const { id } = useParams()
+  const server = serverInfo[id-1]
+  console.log(server)
+  const [functions, setFunctions] = useState([])
+
+
   const location = useLocation();
-  const mainPanelRef = React.useRef(null);
-  const [sidebarOpened, setsidebarOpened] = React.useState(
-    document.documentElement.className.indexOf("nav-open") !== -1
-  );
-  React.useEffect(() => {
+  const mainPanelRef = useRef(null);
+
+  useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");
@@ -59,7 +65,7 @@ function Admin(props) {
       }
     };
   });
-  React.useEffect(() => {
+  useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       let tables = document.querySelectorAll(".table-responsive");
       for (let i = 0; i < tables.length; i++) {
@@ -72,53 +78,29 @@ function Admin(props) {
       mainPanelRef.current.scrollTop = 0;
     }
   }, [location]);
-  // this function opens and closes the sidebar on small devices
-  const toggleSidebar = () => {
-    document.documentElement.classList.toggle("nav-open");
-    setsidebarOpened(!sidebarOpened);
-  };
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
-  const getBrandText = (path) => {
-    for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
-        return routes[i].name;
-      }
-    }
-    return "Brand";
-  };
+
+  useEffect(() => {
+   //CALL FUNCTION LIST JS
+    getFunctions(server.ip_address, server.username, server.password).then(res => {
+        setFunctions(res)
+    })
+  }, [])
+  console.log(functions)
+
   return (
     <BackgroundColorContext.Consumer>
       {({ color, changeColor }) => (
         <React.Fragment>
             <Sidebar
-              routes={routes}
+              functions={functions}
               logo={{
                 outterLink: "https://www.creative-tim.com/",
-                text: "Creative Tim",
+                text: "Functions",
                 imgSrc: logo
               }}
-              toggleSidebar={toggleSidebar}
             />
             <div className="main-panel" ref={mainPanelRef} data={color}>
-                <AdminNavbar
-                    brandText={getBrandText(location.pathname)}
-                    toggleSidebar={toggleSidebar}
-                    sidebarOpened={sidebarOpened}
-                />
+                <AdminNavbar/>
               {
                 // we don't want the Footer to be rendered on map page
                 location.pathname === "/admin/maps" ? null : <Footer fluid />
@@ -130,4 +112,4 @@ function Admin(props) {
   );
 }
 
-export default Admin;
+export default Server;
