@@ -40,6 +40,7 @@ function Server(props) {
   const server = serverInfo[id-1]
   const [functions, setFunctions] = useState([])
   const [selectedFunction, setSelectedFunction] = useState(null)
+  const [refresh, setRefresh] = useState(false)
 
   const location = useLocation();
   const mainPanelRef = useRef(null);
@@ -79,16 +80,29 @@ function Server(props) {
     }
   }, [location]);
 
-  useEffect(() => {
-   //CALL FUNCTION LIST JS
-    getFunctions(server.ip_address, server.username, server.password).then(res => {
-        setFunctions(res)
-    })
-  }, [])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //        //CALL FUNCTION LIST JS
+  //     getFunctions(server.ip_address, server.username, server.password).then(res => {
+  //     console.log("sa")
+  //     setFunctions(res)
+  //   })
+  //   }, 5000)
+  // }, [])
+
+useEffect(() => {
+      //CALL FUNCTION LIST JS
+      getFunctions(server.ip_address, server.username, server.password).then(res => {
+      setFunctions(res)
+})
+}, [])
+
+
   console.log(selectedFunction);
 
   const handleFunctionChange = (func) => {
     setSelectedFunction(func)
+    setRefresh(!refresh)
   };
 
   return (
@@ -114,7 +128,14 @@ function Server(props) {
                 replicas = {selectedFunction.replicas}
                 invocationCount = {selectedFunction.invocationCount}
                 /> 
-                <FunctionInvoke></FunctionInvoke>
+                <FunctionInvoke
+                key = {selectedFunction.name}
+                url = {'http://' + server.ip_address + ':8080/function/' + selectedFunction.name}
+                disabled = {selectedFunction.replicas ? false : true}
+                username = {server.username}
+                password = {server.password}
+                refresh = {refresh}
+                />
                 </div>
                 : null
                 }

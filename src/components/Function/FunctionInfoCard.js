@@ -18,7 +18,7 @@ import {
 var ps;
 
 function FunctionInfoCard(props) {
-    console.log(props)
+    //console.log(props)
   return (
     <BackgroundColorContext.Consumer>
       {({ color }) => (
@@ -34,7 +34,7 @@ function FunctionInfoCard(props) {
                 <CardHeader>
                   <CardTitle tag="h3">
                     <i className="tim-icons icon-triangle-right-17 text-primary" />{" "}
-                    Status: Düzelt
+                    Status: {props.replicas ? 'Ready' : 'Not Ready'}
                   </CardTitle>
                 </CardHeader>
               </Card>
