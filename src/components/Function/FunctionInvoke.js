@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 import {
   BackgroundColorContext,
-  backgroundColors
 } from "contexts/BackgroundColorContext";
+
 import invokeFunction from "services/FunctionInvoke";
 // reactstrap components
 import {
@@ -17,8 +17,6 @@ import {
     Button,
     Input
   } from "reactstrap";
-
-var ps;
 
 function FunctionInvoke(props) {
 

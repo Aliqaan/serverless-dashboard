@@ -15,10 +15,6 @@ import {
     Row
   } from "reactstrap";
 
-var ps;
-
-
-
 function MonitorGraph(props) {
 
     const [memoryData, setMemoryData] = useState([]);

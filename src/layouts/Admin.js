@@ -16,16 +16,13 @@
 
 */
 import React from "react";
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
-import Footer from "components/Footer/Footer.js";
 import DashboardView from "../views/Dashboard";
-import routes from "routes.js";
 
-import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 
 var ps;
@@ -33,9 +30,7 @@ var ps;
 function Admin(props) {
   const location = useLocation();
   const mainPanelRef = React.useRef(null);
-  const [sidebarOpened, setsidebarOpened] = React.useState(
-    document.documentElement.className.indexOf("nav-open") !== -1
-  );
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
@@ -71,21 +66,6 @@ function Admin(props) {
     }
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
   return (
     <BackgroundColorContext.Consumer>
       {({ color, changeColor }) => (

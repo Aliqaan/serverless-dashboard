@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   BackgroundColorContext,
-  backgroundColors
 } from "contexts/BackgroundColorContext";
 
 // reactstrap components
@@ -14,8 +13,6 @@ import {
     Row,
     Col,
   } from "reactstrap";
-
-var ps;
 
 function FunctionInfoCard(props) {
     //console.log(props)
