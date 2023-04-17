@@ -419,7 +419,7 @@ const chartExample4 = {
   }
 };
 
-const generateChartConfig = (labels,data) => {
+const generateChartConfig = (labels,data, name) => {
   return {
   data: (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -434,7 +434,7 @@ const generateChartConfig = (labels,data) => {
       labels: labels,
       datasets: [
         {
-          label: "Free Memory",
+          label: name,
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#00d6b4",
@@ -447,7 +447,7 @@ const generateChartConfig = (labels,data) => {
           pointBorderWidth: 2,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
-          pointRadius: 2,
+          pointRadius: 1.4,
           data: data
         }
       ]
