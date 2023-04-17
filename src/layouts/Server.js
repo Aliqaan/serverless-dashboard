@@ -27,6 +27,7 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FunctionInfoCard from "components/Function/FunctionInfoCard.js";
 import FunctionInvoke from "../components/Function/FunctionInvoke";
+import MonitorGraph from "components/Monitor/MonitorGraph";
 
 import { serverInfo } from 'constants/servers.js'
 import logo from "assets/img/react-logo.png";
@@ -40,6 +41,8 @@ function Server(props) {
   const server = serverInfo[id-1]
   const [functions, setFunctions] = useState([])
   const [selectedFunction, setSelectedFunction] = useState(null)
+  const [monitor, setMonitor] = useState(false)
+  const [deploy, setDeploy] = useState(false)
   const [refresh, setRefresh] = useState(false)
 
   const location = useLocation();
@@ -100,9 +103,12 @@ useEffect(() => {
 
   console.log(selectedFunction);
 
-  const handleFunctionChange = (func) => {
+  const handleFunctionChange = (func, isMonitor, isDeploy) => {
     setSelectedFunction(func)
+    setMonitor(isMonitor)
+    setDeploy(isDeploy)
     setRefresh(!refresh)
+    
   };
 
   return (
@@ -139,7 +145,14 @@ useEffect(() => {
                 </div>
                 : null
                 }
-                
+              
+              { monitor ?
+                <div className="main-panel-function">
+                  <MonitorGraph
+                  />
+                </div>
+                : null
+              }
               {
                 // we don't want the Footer to be rendered on map page
                 location.pathname === "/admin/maps" ? null : <Footer fluid />

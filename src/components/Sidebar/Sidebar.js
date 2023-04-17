@@ -60,19 +60,19 @@ function Sidebar(props) {
     setShowMonitoring(false)
     setShowDeploy(false)
     console.log(props)
-    onFunctionChange(func)
+    onFunctionChange(func, false, false)
   };
   const handleMonitorClick = () => {
     setSelectedFunction({})
     setShowMonitoring(true)
     setShowDeploy(false)
-    onFunctionChange(null)
+    onFunctionChange(null, true, false)
   };
   const handleDeployClick = () => {
     setSelectedFunction([])
     setShowMonitoring(false)
     setShowDeploy(true)
-    onFunctionChange(null)
+    onFunctionChange(null, false, true)
   };
 
   const { functions, logo, onFunctionChange} = props;
