@@ -28,6 +28,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FunctionInfoCard from "components/Function/FunctionInfoCard.js";
 import FunctionInvoke from "../components/Function/FunctionInvoke";
 import MonitorGraph from "components/Monitor/MonitorGraph";
+import FunctionDeploy from "components/Function/FunctionDeploy";
 
 import { serverInfo } from 'constants/servers.js'
 import logo from "assets/img/react-logo.png";
@@ -150,6 +151,12 @@ useEffect(() => {
                 <div className="main-panel-function">
                   <MonitorGraph
                   />
+                </div>
+                : null
+              }
+              { deploy ?
+                <div className="main-panel-function">
+                  <FunctionDeploy/>
                 </div>
                 : null
               }

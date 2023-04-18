@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.1.1",
+    "@uiw/react-textarea-code-editor": "^2.1.1",
     "bootstrap": "4.5.3",
     "chart.js": "3.4.1",
     "classnames": "2.3.1",
