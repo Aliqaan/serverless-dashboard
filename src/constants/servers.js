@@ -1,7 +1,7 @@
 const serverInfo = [
     {
         "id":1,
-        "ip_address": 'ec2-18-196-120-124.eu-central-1.compute.amazonaws.com',
+        "ip_address": '18.196.120.124',
         "architecture": "Arm",
         "state":"Running",
         "username":'admin',
@@ -16,6 +16,15 @@ const serverInfo = [
         "username":'admin',
         'password':'vIhxExx3LwmNaX7DxFOFf6lgyrS3mbXbQ0W3TotqdhgTYskzK71h6ZrNY6dIGLc',
         'type': 'Cloud'
+    },
+    {
+        "id":3,
+        "ip_address": '192.168.1.5',
+        "architecture": "Arm",
+        "state":"Running",
+        "username":'admin',
+        'password':'Qk72tOBjuF1rfJd7qgJRHq02zOdz8HiNnnMU2RtQwvbuPfGocmuweQP1xpirqq4',
+        'type': 'Edge'
     },
 ]
 

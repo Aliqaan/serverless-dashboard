@@ -21,10 +21,10 @@ function MonitorGraph(props) {
     const [cpuData, setCPUData] = useState([]);
 
     useEffect(() => {
-    getMetrics(true).then(res => {
+    getMetrics(true, props.host_address).then(res => {
         setMemoryData(res.data)
     })
-    getMetrics(false).then(res => {
+    getMetrics(false, props.host_address).then(res => {
         setCPUData(res.data)
     })
     }, []);
@@ -32,7 +32,6 @@ function MonitorGraph(props) {
   return (
     <>
       <div className="content">
-        {memoryData.result &&
         <Row>  
         <Col lg="12">
           <Card className="card-chart">
@@ -41,6 +40,7 @@ function MonitorGraph(props) {
                 <i className="tim-icons icon-send text-success" /> Available Memory (Bytes)
               </CardTitle>
             </CardHeader>
+            {memoryData.result && memoryData.result.length !==0 &&
             <CardBody>
                 <div className="chart-area">
                     <Line
@@ -61,11 +61,10 @@ function MonitorGraph(props) {
                     />
               </div>
             </CardBody>
+            }
           </Card>
         </Col>
         </Row>
-        }
-        {cpuData.result &&
         <Row>  
         <Col lg="12">
           <Card className="card-chart">
@@ -74,6 +73,7 @@ function MonitorGraph(props) {
                 <i className="tim-icons icon-send text-success" /> CPU Usage (%)
               </CardTitle>
             </CardHeader>
+            {cpuData.result &&  memoryData.result.length !==0 &&
             <CardBody>
                 <div className="chart-area">
                     <Line
@@ -94,10 +94,10 @@ function MonitorGraph(props) {
                     />
               </div>
             </CardBody>
+            }
           </Card>
         </Col>
       </Row>
-        }
       </div>
     </>
   );

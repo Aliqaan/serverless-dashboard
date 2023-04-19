@@ -47,7 +47,7 @@ function FunctionInvoke(props) {
   return (
     <BackgroundColorContext.Consumer>
       {({ color }) => (
-        <div className="content" style={{marginTop: '-550px'}}>
+        <div className="content" style={{marginTop: '-400px'}}>
             <Card className="card-chart">
       <CardHeader>
         <CardTitle style={{ textAlign: 'center' }} tag="h3">

@@ -150,6 +150,7 @@ useEffect(() => {
               { monitor ?
                 <div className="main-panel-function">
                   <MonitorGraph
+                  host_address = {server.ip_address}
                   />
                 </div>
                 : null

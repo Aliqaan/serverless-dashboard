@@ -20,8 +20,8 @@ import {
 
 function FunctionDeploy(props) {
     const [functionName, setFunctionName] = useState(null);
-    const [code, setCode] = React.useState(
-        `def add(a, b):\n  return a + b\n\nprint(add(1,2))`
+    const [code, setCode] = useState(
+        `def handle(req):\n    """handle a request to the function\n    Args:\n    req (str): request body\n    """\n    return req`
       );
 
     const handleDeployButtonClick = () => {
