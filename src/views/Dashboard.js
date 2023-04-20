@@ -93,16 +93,6 @@ function Dashboard(props) {
                         </CardHeader>
                       </Card>
                     </Col>
-                    <Col lg="12">
-                      <Card>
-                        <CardHeader>
-                          <CardTitle tag="h3">
-                            <i className="tim-icons icon-wifi text-primary" />{" "}
-                            Url: {'http://' + server.ip_address + ':8080'}
-                          </CardTitle>
-                        </CardHeader>
-                      </Card>
-                    </Col>
                   </Row>
                   </CardBody>
                 </Card>

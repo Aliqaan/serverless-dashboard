@@ -137,7 +137,7 @@ useEffect(() => {
                 /> 
                 <FunctionInvoke
                 key = {selectedFunction.name}
-                url = {'http://' + server.ip_address + ':8080/function/' + selectedFunction.name}
+                url = {server.ip_address + '/function/' + selectedFunction.name}
                 disabled = {selectedFunction.replicas ? false : true}
                 username = {server.username}
                 password = {server.password}
@@ -150,7 +150,7 @@ useEffect(() => {
               { monitor ?
                 <div className="main-panel-function">
                   <MonitorGraph
-                  host_address = {server.ip_address}
+                  host_address = {server.prometheus_address}
                   />
                 </div>
                 : null

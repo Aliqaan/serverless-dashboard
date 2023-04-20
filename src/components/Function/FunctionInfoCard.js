@@ -65,7 +65,7 @@ function FunctionInfoCard(props) {
                 <CardHeader>
                   <CardTitle tag="h3">
                     <i className="tim-icons icon-wifi text-primary" />{" "}
-                    URL: {'http://' + props.ip_address + ':8080/function/' + props.name}
+                    URL: {props.ip_address + '/function/' + props.name}
                   </CardTitle>
                 </CardHeader>
               </Card>
