@@ -5,6 +5,7 @@ import {
   BackgroundColorContext,
 } from "contexts/BackgroundColorContext";
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import deployFunction from "services/FunctionDeploy";
 
 // reactstrap components
 import {
@@ -23,11 +24,16 @@ function FunctionDeploy(props) {
     const [code, setCode] = useState(
         `def handle(req):\n    """handle a request to the function\n    Args:\n    req (str): request body\n    """\n    return req`
       );
+    const [refresh, setRefresh] = useState(false)
 
     const handleDeployButtonClick = () => {
         //Do the hardwork here
         console.log(functionName.trim())
         console.log(code)
+        const architecture = props.type === 'Edge' ? "linux/arm/7" : props.architecture === 'Arm' ? 'linux/arm64' : 'linux/amd64'
+        deployFunction(props.gateway, props.password, functionName, code, architecture).then(res => {
+          setRefresh(true)
+        })
       };
 
   return (

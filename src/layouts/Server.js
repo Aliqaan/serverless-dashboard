@@ -136,8 +136,8 @@ useEffect(() => {
                 invocationCount = {selectedFunction.invocationCount}
                 /> 
                 <FunctionInvoke
-                key = {selectedFunction.name}
-                url = {server.ip_address + '/function/' + selectedFunction.name}
+                function_name = {selectedFunction.name}
+                url = {server.ip_address}
                 disabled = {selectedFunction.replicas ? false : true}
                 username = {server.username}
                 password = {server.password}
@@ -157,7 +157,12 @@ useEffect(() => {
               }
               { deploy ?
                 <div className="main-panel-function">
-                  <FunctionDeploy/>
+                  <FunctionDeploy
+                    gateway = {server.ip_address}
+                    password = {server.password}
+                    architecture = {server.architecture}
+                    type = {server.type}
+                  />
                 </div>
                 : null
               }

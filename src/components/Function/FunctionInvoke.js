@@ -19,7 +19,6 @@ import {
   } from "reactstrap";
 
 function FunctionInvoke(props) {
-
   const [requestBody, setRequestBody] = useState('');
   const [requestResponse, setRequestResponse] = useState(null)
   const [requestTripTime, setRequestTripTime] = useState(null)
@@ -34,7 +33,7 @@ function FunctionInvoke(props) {
 
   const handleInvokeButtonClick = () => {
     const start = window.performance.now();
-    invokeFunction(props.url, props.username, props.password, requestBody).then(res => {
+    invokeFunction(props.url, props.username, props.password, requestBody, props.function_name).then(res => {
       const end = window.performance.now();
       const roundTripTime = (end - start) / 1000;
       setRequestTripTime(roundTripTime.toFixed(3))
