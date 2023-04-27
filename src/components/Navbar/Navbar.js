@@ -56,25 +56,10 @@ function AdminNavbar(props) {
 
   return (
     <>
-      <Navbar className={classNames("navbar-absolute", color)} expand="lg">
-        <Container fluid>
-          <div className="navbar-wrapper">
-            <div
-              className={classNames("navbar-toggle d-inline", {
-                toggled: props.sidebarOpened
-              })}
-            >
-              <NavbarToggler onClick={props.toggleSidebar}>
-                <span className="navbar-toggler-bar bar1" />
-                <span className="navbar-toggler-bar bar2" />
-                <span className="navbar-toggler-bar bar3" />
-              </NavbarToggler>
-            </div>
+      <Navbar className={classNames("navbar-absolute", color)} style={{position:'fixed'}} expand="lg">
             <div className="btn btn-round" style={{marginBottom:'100px'}} onClick={handleButtonClick}>
             <i className="tim-icons icon-double-left"/> Go Back
-            </div>
           </div>
-        </Container>
       </Navbar>
     </>
   );
