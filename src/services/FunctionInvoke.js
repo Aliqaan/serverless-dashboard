@@ -8,11 +8,12 @@ async function invokeFunction(url, username, password, body, function_name) {
         method: "POST",
         headers: {
             'Authorization': 'Basic ' + btoa(username + ':' + password),
-            'x-target-server': url
+            'origin': PROXY_SERVER_URL,
+            'ngrok-skip-browser-warning': 'yes'
          },
         body: body
     }
-    const response = await fetch(`${PROXY_SERVER_URL}/function/${function_name}`, requestOptions)
+    const response = await fetch(`${PROXY_SERVER_URL}/${url}/function/${function_name}`, requestOptions)
     console.log(response)
 
     const resMessage = await response.text()

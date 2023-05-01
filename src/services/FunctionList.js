@@ -6,10 +6,11 @@ async function getFunctions(url, username, password) {
         method: "GET",
         headers: {
             'Authorization': 'Basic ' + btoa(username + ':' + password),
-            'x-target-server': url
+            'origin': PROXY_SERVER_URL,
+            'ngrok-skip-browser-warning': 'yes'
          },
     }
-    const response = await fetch(`${PROXY_SERVER_URL}/system/functions`, requestOptions)
+    const response = await fetch(`${PROXY_SERVER_URL}/${url}/system/functions`, requestOptions)
     console.log(response)
     const resMessage = await response.json()
 

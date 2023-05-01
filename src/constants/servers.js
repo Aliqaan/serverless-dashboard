@@ -25,10 +25,10 @@ const serverInfo = [
         "id":3,
         //address from the ngrok tunneling ngrok http 8080
         //"ip_address": 'https://7e18-94-123-218-2.eu.ngrok.io',
-        "ip_address": 'https://7e18-94-123-218-2.eu.ngrok.io',
+        "ip_address": 'http://b585-94-123-223-81.ngrok-free.app:80',
         //address from the ngrok tunneling with ngrok http 9100 --scheme http
         //"prometheus_address":"e496-94-123-218-2.ngrok-free.app:80",
-        "prometheus_address":"2d16-94-123-223-81.ngrok-free.app:80",
+        "prometheus_address":"6ace-94-123-223-81.ngrok-free.app:80",
         "architecture": "Arm",
         "state":"Running",
         "username":'admin',

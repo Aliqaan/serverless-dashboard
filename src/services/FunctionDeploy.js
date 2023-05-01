@@ -1,4 +1,4 @@
-import { PROXY_SERVER_URL } from "../constants/values"
+import { DEPLOY_SERVER_URL } from "../constants/values"
 
 async function deployFunction(gateway, password, function_name, function_code, architecture) {
 
@@ -14,7 +14,7 @@ async function deployFunction(gateway, password, function_name, function_code, a
         })
     }
 
-    const response = await fetch(`${PROXY_SERVER_URL}/deploy-script`, requestOptions)
+    const response = await fetch(`${DEPLOY_SERVER_URL}/deploy-script`, requestOptions)
     const resMessage = await response.json()
 
     if (response.status === 200) {
