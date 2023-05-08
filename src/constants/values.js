@@ -1,4 +1,4 @@
-const PROMETHEUS_URL = 'http://localhost:9090'
+const PROMETHEUS_URL = 'https://prometheus-server.loca.lt'
 const PROXY_SERVER_URL = 'http://localhost:3131'
 const DEPLOY_SERVER_URL = 'http://localhost:3132'
 
