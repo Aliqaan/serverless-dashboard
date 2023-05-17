@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { useLocation, useParams } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
@@ -35,6 +35,9 @@ import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import getFunctions from "../services/FunctionList";
 
+const MemoizedMonitorGraph = memo(MonitorGraph);
+
+
 var ps;
 
 function Server(props) {
@@ -45,6 +48,7 @@ function Server(props) {
   const [monitor, setMonitor] = useState(false)
   const [deploy, setDeploy] = useState(false)
   const [refresh, setRefresh] = useState(false)
+  const [refreshMonitor, setRefreshMonitor] = useState(false)
 
   const location = useLocation();
   const mainPanelRef = useRef(null);
@@ -84,25 +88,37 @@ function Server(props) {
     }
   }, [location]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //        //CALL FUNCTION LIST JS
-  //     getFunctions(server.ip_address, server.username, server.password).then(res => {
-  //     console.log("sa")
-  //     setFunctions(res)
-  //   })
-  //   }, 5000)
-  // }, [])
-
-useEffect(() => {
+  useEffect(() => {
+    let interval = setInterval(() => {
       //CALL FUNCTION LIST JS
       getFunctions(server.ip_address, server.username, server.password).then(res => {
-      setFunctions(res)
-})
-}, [])
+      const sortedFunctions = res.sort((a, b) => a.name.localeCompare(b.name));
+      if (sortedFunctions !== functions) {
+        setFunctions(sortedFunctions)
+      }
+    })
+    setRefreshMonitor(prevRefreshMonitor => !prevRefreshMonitor)
+    }, 10000)
+    
+    getFunctions(server.ip_address, server.username, server.password).then(res => {
+      const sortedFunctions = res.sort((a, b) => a.name.localeCompare(b.name));
+      if (sortedFunctions !== functions) {
+        setFunctions(sortedFunctions);
+      }
+    });
+    setRefreshMonitor(prevRefreshMonitor => !prevRefreshMonitor);
+    
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
-
-  console.log(selectedFunction);
+// useEffect(() => {
+//       //CALL FUNCTION LIST JS
+//       getFunctions(server.ip_address, server.username, server.password).then(res => {
+//       setFunctions(res)
+// })
+// }, [])
 
   const handleFunctionChange = (func, isMonitor, isDeploy) => {
     setSelectedFunction(func)
@@ -149,8 +165,9 @@ useEffect(() => {
               
               { monitor ?
                 <div className="main-panel-function">
-                  <MonitorGraph
+                  <MemoizedMonitorGraph
                   host_address = {server.prometheus_address}
+                  refresh = {refreshMonitor}
                   />
                 </div>
                 : null

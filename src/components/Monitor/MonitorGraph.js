@@ -27,7 +27,7 @@ function MonitorGraph(props) {
     getMetrics(false, props.host_address).then(res => {
         setCPUData(res.data)
     })
-    }, []);
+    }, [props.refresh]);
 
   return (
     <>
