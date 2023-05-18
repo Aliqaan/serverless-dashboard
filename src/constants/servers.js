@@ -2,9 +2,9 @@ const serverInfo = [
     {
         "id":1,
         //used for endpoint calls such as function invoke and function list
-        "ip_address": 'http://ec2-18-196-120-124.eu-central-1.compute.amazonaws.com:8080',
+        "ip_address": 'http://ec2-3-64-126-164.eu-central-1.compute.amazonaws.com:8080',
         //used for monitoring purposes
-        "prometheus_address":"ec2-18-196-120-124.eu-central-1.compute.amazonaws.com:9100",
+        "prometheus_address":"ec2-3-64-126-164.eu-central-1.compute.amazonaws.com:9100",
         "architecture": "Arm",
         "state":"Running",
         "username":'admin',

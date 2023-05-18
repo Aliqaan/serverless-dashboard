@@ -37,7 +37,7 @@ function MonitorGraph(props) {
           <Card className="card-chart">
             <CardHeader>
               <CardTitle tag="h3">
-                <i className="tim-icons icon-send text-success" /> Available Memory (Bytes)
+                <i className="tim-icons icon-send text-success" /> Memory Usage (%)
               </CardTitle>
             </CardHeader>
             {memoryData.result && memoryData.result.length && memoryData.result.length !==0 &&
@@ -48,14 +48,14 @@ function MonitorGraph(props) {
                             value => new Date(value[0] * 1000).toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:false})
                             ), 
                             memoryData.result[0].values.map(value => value[1]),
-                            'Available Memory'
+                            'Memory Usage'
                             ).data
                         }
                         options={generateChartConfig(memoryData.result[0].values.map(
                             value => new Date(value[0] * 1000).toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:false})
                             ), 
                             memoryData.result[0].values.map(value => value[1]),
-                            'Available Memory'
+                            'Memory Usage'
                             ).options
                         }
                     />
