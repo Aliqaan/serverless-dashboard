@@ -15,14 +15,14 @@ async function deployFunction(gateway, password, function_name, function_code, a
     }
 
     const response = await fetch(`${DEPLOY_SERVER_URL}/deploy-script`, requestOptions)
-    const resMessage = await response.json()
+    const resMessage = await response.text()
 
     if (response.status === 200) {
         console.log(resMessage)
-        return resMessage
+        return 'Success'
     } else {
         console.log(resMessage)
-        return resMessage["error"]
+        return 'Fail'
     }
 }
 
