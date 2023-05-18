@@ -40,7 +40,7 @@ function MonitorGraph(props) {
                 <i className="tim-icons icon-send text-success" /> Available Memory (Bytes)
               </CardTitle>
             </CardHeader>
-            {memoryData.result && memoryData.result.length !==0 &&
+            {memoryData.result && memoryData.result.length && memoryData.result.length !==0 &&
             <CardBody>
                 <div className="chart-area">
                     <Line
