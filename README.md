@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Serverless Computing Model For Edge Applications
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the repository of the senior project [Serverless Computing Model For Edge Applications](https://www.cmpe.boun.edu.tr/content/serverless-computing-model-edge-applications) in Bogazici University
 
-## Available Scripts
+## Project Details
 
-In the project directory, you can run:
+Our project aims to implement a serverless computing framework for running serverless applications on the edge. There are many components of the projects which will be explained in following sections.
 
-### `npm start`
+The dashboard we implemented provides users a simple interface which allows users to perform basic operations on the servers such as deploying a function, invoking a function and monitoring the server's CPU and memory usage.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+We decided to use 3 servers to act as an edge server: 2 EC2 instances on the AWS with two different architectures, arm and amd. and 1 Raspberry pi as a true edge server.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Dashboard is deployed into another EC2 instance. How to setup and run the servers will be explained in the following sections.
 
-### `npm test`
+Apart from this repository we also have a backend server in which we perform the function deploy operation via a shell script. [Here is the repository of the deployment server](https://github.com/Aliqaan/deploy-server)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To avoid CORS errors occurring in the dashboard we used the [Cors Anywhere](https://github.com/Rob--W/cors-anywhere) implementation.
 
-### `npm run build`
+## Components
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* [Faasd](https://github.com/openfaas/faasd): Faasd is the serverless framework we chose to use in our project since it is designed and implemented without using Kubernetes which makes it a lightweight framework suitable for edge devices. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* [Prometheus](https://github.com/prometheus/prometheus): Prometheus is a systems and service monitoring system. It collects metrics from configured targets at given intervals. Prometheus comes with the faasd installation however we could not manage to modify it according to our needs. Our solution will be reflected in the Setup section.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [Node exporter](https://github.com/prometheus/node_exporter): Prometheus exporter for hardware and OS metrics. This is used in the edge servers to collect system metrics such as CPU and memory usage to be used in the monitoring part of the project.
 
-### `npm run eject`
+* [ngrok](https://github.com/bubenshchykov/ngrok) and [lt](https://github.com/localtunnel/localtunnel): Both of these project allows us to make a port on our local computer publicy available. We used ngrok to expose the ports of faasd and node exporter in the raspberry pi and lt for exposing the prometheus in our local computers.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* [Cors Anywhere](https://github.com/Rob--W/cors-anywhere): Publicly available proxy server to avoid CORS errors encountered on the dasboard.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* [Deploy-Server](https://github.com/Aliqaan/deploy-server): Backend server with the only purpose of deploying a function to an edge server. It takes the required parameters and execute a shell script to deploy function.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Follow the below steps to setup and run the system.
 
-## Learn More
+### For edge servers:
+* Install faasd using the installation options on the repository page.
+* Install node exporter for metric collection.
+* Install ngrok for port exposing. (Skip this if server is deployed on a Cloud Provider)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can check if everything is working by sending a  curl request to port 8080 for faasd and port 9100 for node exporter. If ngrok is used send a request to the public url which is given after exposing the port via terminal.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### For dashboard server:
+* Install faasd.
+* Install node and npm for running the React and Node projects.
+* Clone the [Dashboard](https://github.com/Aliqaan/serverless-dashboard) repository.
+* Clone the [Deploy-Server](https://github.com/Aliqaan/deploy-server) repository.
+* Clone the [Cors Anywhere](https://github.com/Rob--W/cors-anywhere) repository and change it's port to 3131. Or any other port of your choice. Do not forget to update the port from the dasboard if changed.
+* Install pm2 using the command:
+```shell
+npm install pm2 -g
+```
+* Start Dashboard, Deploy-Server and Cors Anywhere applications using the pm2 start commands.
 
-### Code Splitting
+### For local computer:
+* Install and configure prometheus to scrape metrics from the node exporter ports of the target servers.
+* Install lt and expose the prometheus port via the command:
+```shell
+lt --port 9090 --subdomain prometheus-server
+```
+Note that dashboard server have prometheus installed during faasd installation. We could not manage to configure it to our needs and that's the reason we have a local prometheus instance which is exposed to internet.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+After the above steps you should be able to run the dashboard locally or deploy to a server.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
