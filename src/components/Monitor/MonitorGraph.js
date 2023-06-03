@@ -40,7 +40,7 @@ function MonitorGraph(props) {
                 <i className="tim-icons icon-send text-success" /> Memory Usage (%)
               </CardTitle>
             </CardHeader>
-            {memoryData.result && memoryData.result.length && memoryData.result.length !==0 &&
+            {memoryData && memoryData.result && memoryData.result.length && memoryData.result.length !==0 &&
             <CardBody>
                 <div className="chart-area">
                     <Line
@@ -73,7 +73,7 @@ function MonitorGraph(props) {
                 <i className="tim-icons icon-send text-success" /> CPU Usage (%)
               </CardTitle>
             </CardHeader>
-            {cpuData.result && memoryData.result.length &&  memoryData.result.length !==0 &&
+            {cpuData && cpuData.result && memoryData.result.length &&  memoryData.result.length !==0 &&
             <CardBody>
                 <div className="chart-area">
                     <Line
