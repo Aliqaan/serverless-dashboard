@@ -45,7 +45,7 @@ function FunctionDeploy(props) {
             <Card className="card-chart">
       <CardHeader>
         <CardTitle style={{ textAlign: 'center' }} tag="h3">
-          Invoke Function
+          Deploy Function
         </CardTitle>
         <Row>
           <Col lg="12">
