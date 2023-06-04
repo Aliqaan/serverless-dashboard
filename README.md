@@ -24,7 +24,7 @@ To avoid CORS errors occurring in the dashboard we used the [Cors Anywhere](http
 
 * [Node exporter](https://github.com/prometheus/node_exporter): Prometheus exporter for hardware and OS metrics. This is used in the edge servers to collect system metrics such as CPU and memory usage to be used in the monitoring part of the project.
 
-* [ngrok](https://github.com/bubenshchykov/ngrok) and [lt](https://github.com/localtunnel/localtunnel): Both of these project allows us to make a port on our local computer publicy available. We used ngrok to expose the ports of faasd and node exporter in the raspberry pi and lt for exposing the prometheus in our local computers.
+* [ngrok](https://github.com/bubenshchykov/ngrok): ngrok allows us to make a port on a machine publicy available. ngrok is used in this project to expose the ports of faasd and node exporter in the raspberry pi.
 
 * [Cors Anywhere](https://github.com/Rob--W/cors-anywhere): Publicly available proxy server to avoid CORS errors encountered on the dasboard.
 
@@ -42,7 +42,7 @@ Follow the below steps to setup and run the system.
 You can check if everything is working by sending a  curl request to port 8080 for faasd and port 9100 for node exporter. If ngrok is used send a request to the public url which is given after exposing the port via terminal.
 
 ### For dashboard server:
-* Install faasd.
+* Install faas-cli. Note that faasd installation is not required since we will only need to run terminal commands to deploy a function in this server not to host functions.
 * Install node and npm for running the React and Node projects.
 * Clone the [Dashboard](https://github.com/Aliqaan/serverless-dashboard) repository.
 * Clone the [Deploy-Server](https://github.com/Aliqaan/deploy-server) repository.
@@ -53,15 +53,8 @@ npm install pm2 -g
 ```
 * Start Dashboard, Deploy-Server and Cors Anywhere applications using the pm2 start commands.
 
-### For local computer:
-* Install and configure prometheus to scrape metrics from the node exporter ports of the target servers.
-* Install lt and expose the prometheus port via the command:
-```shell
-lt --port 9090 --subdomain prometheus-server
-```
-Note that dashboard server have prometheus installed during faasd installation. We could not manage to configure it to our needs and that's the reason we have a local prometheus instance which is exposed to internet.
 
-After the above steps you should be able to run the dashboard locally or deploy to a server.
+After the above steps you should be able to run this project locally or deploy to a server.
 
 
 
